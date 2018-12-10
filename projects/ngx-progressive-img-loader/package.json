@@ -1,0 +1,17 @@
+{
+  "name": "ngx-progressive-img-loader",
+  "author": {
+    "name": "Victor Aremu",
+    "email": "victor.olorunbunmi@gmail.com",
+    "url": "https://github.com/ahkohd/"
+  },
+  "version": "0.0.3",
+  "description": "A simple, flexible progressive image loader for angular 4+",
+  "keywords": ["progressive", "image", "loader", "lazy", "angular", "ngx"],
+  "homepage": "https://github.com/ahkohd/ngx-progressive-img-loader",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
+  }
+}
