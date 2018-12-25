@@ -3,7 +3,8 @@
 ## Demo
 ![ngx-progressive-img-loader demo](https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/01/1485348439progressive-image-example.gif)
 
-See full [demo on stackblitz.com](https://ngx-progressive-img-loader.stackblitz.io)
+See a Ionic 3 [demo on stackblitz.com](https://stackblitz.com/edit/ionic-progressive-image-loader)
+Also see a [demo on stackblitz.com](https://ngx-progressive-img-loader.stackblitz.io)
 ## Features
 
  - No use of external dependencies, implemented with Angular APIs.
