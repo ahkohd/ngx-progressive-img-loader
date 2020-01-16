@@ -5,7 +5,8 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  Renderer2
+  Renderer2,
+  AfterViewInit
 } from "@angular/core";
 
 @Component({
@@ -123,7 +124,7 @@ import {
     `
   ]
 })
-export class NgxProgressiveImgLoaderComponent implements OnInit {
+export class NgxProgressiveImgLoaderComponent implements OnInit, AfterViewInit {
   // high resolution image url (required)
   @Input() img: string;
 
@@ -158,14 +159,12 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
   @Input() preserveAspectRatio: boolean;
 
   constructor(public el: ElementRef, private rd: Renderer2) {}
-  ngOnInit() {
-    // if custom placeholder image isset, use it as placeholder bg
-    if (this.placeholderImg) {
-      const placeholder: any = this.el.nativeElement.querySelector(
-        ".ngx-progressive-img-container-default-bg"
-      );
-      placeholder.style.background = "url('" + this.placeholderImg + "')";
-    }
+  ngOnInit() {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    // this.doSomething(changes.categoryId.currentValue);
+    // You can also use categoryId.previousValue and
+    // categoryId.firstChange for comparing old and new values
   }
 
   ngAfterViewInit() {
@@ -173,6 +172,14 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
   }
 
   loadImage() {
+    // if custom placeholder image isset, use it as placeholder bg
+    if (this.placeholderImg) {
+      const $placeholder: any = this.el.nativeElement.querySelector(
+        ".ngx-progressive-img-container-default-bg"
+      );
+      $placeholder.style.background = "url('" + this.placeholderImg + "')";
+    }
+
     const thumbnailContainer: any = this.el.nativeElement.querySelector(
       ".ngx-progressive-img-container-low-res-container"
     );
