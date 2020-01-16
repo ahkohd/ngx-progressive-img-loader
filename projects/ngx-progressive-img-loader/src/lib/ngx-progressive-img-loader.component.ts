@@ -16,7 +16,7 @@ import {
     <div
       class="ngx-progressive-img-container"
       [ngStyle]="{
-        'background-color': placeholderBgColor,
+        'background-color': _placeholderBgColor,
         height: height,
         width: width
       }"
@@ -30,7 +30,7 @@ import {
         [ngStyle]="{
           height: height,
           width: width,
-          'background-color': overlayTint
+          'background-color': _overlayTint
         }"
       ></div>
 
@@ -143,10 +143,24 @@ export class NgxProgressiveImgLoaderComponent
   @Input() width: string;
 
   // overlay tint to cover the high res image (optional)
-  @Input() overlayTint: string;
+  public _overlayTint: string;
+  @Input() set overlayTint(value: string) {
+    this._overlayTint = value;
+  }
+
+  get overlayTint() {
+    return this._overlayTint;
+  }
 
   // placeholder bg color, (optional) default, #eee
-  @Input() placeholderBgColor: string;
+  public _placeholderBgColor: string;
+
+  @Input() set placeholderBgColor(value: string) {
+    this._placeholderBgColor = value;
+  }
+  get placeholderBgColor(): string {
+    return this._placeholderBgColor;
+  }
 
   // placeholder default image, (optional) default, base 64 image.
   @Input() placeholderImg: string;
@@ -165,35 +179,45 @@ export class NgxProgressiveImgLoaderComponent
 
   ngOnChanges(changes) {
     // Reload if @input changes happens.
-    this.loadImage(
-      this.el,
-      this.rd,
-      changes.placeholderImg.currentValue,
-      changes.preserveAspectRatio.currentValue,
-      changes.width.currentValue,
-      changes.height.currentValue,
-      changes.thumbnailLoaded.currentValue,
-      changes.thumbnail.currentValue,
-      changes.imageLoaded.currentValue,
-      changes.fallbackImg.currentValue,
-      changes.img.currentValue
-    );
+    try {
+      this.loadImage(
+        this.el,
+        this.rd,
+        changes.placeholderImg
+          ? changes.placeholderImg.currentValue
+          : this.placeholderImg,
+        changes.preserveAspectRatio
+          ? changes.preserveAspectRatio.currentValue
+          : this.preserveAspectRatio,
+        changes.width ? changes.width.currentValue : this.width,
+        changes.height ? changes.height.currentValue : this.height,
+        this.thumbnailLoaded,
+        changes.thumbnail ? changes.thumbnail.currentValue : this.thumbnail,
+        this.imageLoaded,
+        changes.fallbackImg
+          ? changes.fallbackImg.currentValue
+          : this.fallbackImg,
+        changes.img ? changes.img.currentValue : this.img
+      );
+    } catch (e) {}
   }
 
   ngAfterViewInit() {
-    this.loadImage(
-      this.el,
-      this.rd,
-      this.placeholderImg,
-      this.preserveAspectRatio,
-      this.width,
-      this.height,
-      this.thumbnailLoaded,
-      this.thumbnail,
-      this.imageLoaded,
-      this.fallbackImg,
-      this.img
-    );
+    try {
+      this.loadImage(
+        this.el,
+        this.rd,
+        this.placeholderImg,
+        this.preserveAspectRatio,
+        this.width,
+        this.height,
+        this.thumbnailLoaded,
+        this.thumbnail,
+        this.imageLoaded,
+        this.fallbackImg,
+        this.img
+      );
+    } catch (e) {}
   }
 
   loadImage(
@@ -210,10 +234,10 @@ export class NgxProgressiveImgLoaderComponent
     img
   ) {
     if (placeholderImg) {
-      const $placeholder: any = el.nativeElement.querySelector(
+      const placeholder$: any = el.nativeElement.querySelector(
         ".ngx-progressive-img-container-default-bg"
       );
-      $placeholder.style.background = "url('" + this.placeholderImg + "')";
+      placeholder$.style.background = "url('" + this.placeholderImg + "')";
     }
 
     const thumbnailContainer: any = el.nativeElement.querySelector(
