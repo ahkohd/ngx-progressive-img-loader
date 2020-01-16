@@ -6,7 +6,8 @@ import {
   Output,
   EventEmitter,
   Renderer2,
-  AfterViewInit
+  AfterViewInit,
+  OnChanges
 } from "@angular/core";
 
 @Component({
@@ -124,7 +125,8 @@ import {
     `
   ]
 })
-export class NgxProgressiveImgLoaderComponent implements OnInit, AfterViewInit {
+export class NgxProgressiveImgLoaderComponent
+  implements OnInit, AfterViewInit, OnChanges {
   // high resolution image url (required)
   @Input() img: string;
 
@@ -161,96 +163,126 @@ export class NgxProgressiveImgLoaderComponent implements OnInit, AfterViewInit {
   constructor(public el: ElementRef, private rd: Renderer2) {}
   ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    // this.doSomething(changes.categoryId.currentValue);
-    // You can also use categoryId.previousValue and
-    // categoryId.firstChange for comparing old and new values
+  ngOnChanges(changes) {
+    // Reload if @input changes happens.
+    this.loadImage(
+      this.el,
+      this.rd,
+      changes.placeholderImg.currentValue,
+      changes.preserveAspectRatio.currentValue,
+      changes.width.currentValue,
+      changes.height.currentValue,
+      changes.thumbnailLoaded.currentValue,
+      changes.thumbnail.currentValue,
+      changes.imageLoaded.currentValue,
+      changes.fallbackImg.currentValue,
+      changes.img.currentValue
+    );
   }
 
   ngAfterViewInit() {
-    this.loadImage();
+    this.loadImage(
+      this.el,
+      this.rd,
+      this.placeholderImg,
+      this.preserveAspectRatio,
+      this.width,
+      this.height,
+      this.thumbnailLoaded,
+      this.thumbnail,
+      this.imageLoaded,
+      this.fallbackImg,
+      this.img
+    );
   }
 
-  loadImage() {
-    // if custom placeholder image isset, use it as placeholder bg
-    if (this.placeholderImg) {
-      const $placeholder: any = this.el.nativeElement.querySelector(
+  loadImage(
+    el,
+    rd,
+    placeholderImg,
+    preserveAspectRatio,
+    width,
+    height,
+    thumbnailLoaded,
+    thumbnail,
+    imageLoaded,
+    fallbackImg,
+    img
+  ) {
+    if (placeholderImg) {
+      const $placeholder: any = el.nativeElement.querySelector(
         ".ngx-progressive-img-container-default-bg"
       );
       $placeholder.style.background = "url('" + this.placeholderImg + "')";
     }
 
-    const thumbnailContainer: any = this.el.nativeElement.querySelector(
+    const thumbnailContainer: any = el.nativeElement.querySelector(
       ".ngx-progressive-img-container-low-res-container"
     );
-    const originalImageContainer: any = this.el.nativeElement.querySelector(
+    const originalImageContainer: any = el.nativeElement.querySelector(
       ".ngx-progressive-img-container-high-res-container"
     );
-    const placeholder: any = this.el.nativeElement.querySelector(
-      ".ngx-progressive-img-container-default-bg"
-    );
 
-    // create and initiate the thumbnail image.
-    const thumb: any = this.rd.createElement("img");
+    // Create humbnail image.
+    const thumb: any = rd.createElement("img");
     thumb.style.height = "100%";
     thumb.style.width = "100%";
-
     thumb.classList.add("ngx-preloader-img-preview");
 
-    if (this.preserveAspectRatio) {
+    if (preserveAspectRatio) {
       thumbnailContainer.style.width = "100% !important";
       thumbnailContainer.style.height = "100% !important";
       thumb.style.objectFit = "cover";
       thumb.style.objectPosition = "50% 50% !important";
-      thumb.style.height = this.height;
-      thumb.style.width = this.width;
+      thumb.style.height = height;
+      thumb.style.width = width;
     } else {
-      thumb.style.width = this.width;
-      thumb.style.height = this.height;
+      thumb.style.width = width;
+      thumb.style.height = height;
     }
 
     thumb.onload = function(e) {
       // inject the loaded thumbnail into its container, wait for imge to finish
       // loading before doing so
-      this.rd.appendChild(thumbnailContainer, thumb);
-      this.thumbnailLoaded.emit({ loaded: true, event: e });
+      rd.appendChild(thumbnailContainer, thumb);
+      thumbnailLoaded.emit({ loaded: true, event: e });
     }.bind(this);
 
     thumb.onerror = function(e) {
-      this.thumbnailLoaded.emit({ loaded: false, event: e });
+      thumbnailLoaded.emit({ loaded: false, event: e });
     }.bind(this);
 
-    thumb.src = this.thumbnail;
+    thumb.src = thumbnail;
 
     // create and initiate the origninal high res image
-    const highRes = this.rd.createElement("img");
+    const highRes = rd.createElement("img");
 
-    if (this.preserveAspectRatio) {
+    if (preserveAspectRatio) {
       originalImageContainer.style.width = "100% !important";
       originalImageContainer.style.height = "100% !important";
       highRes.style.objectFit = "cover";
       highRes.style.objectPosition = "50% 50% !important";
-      highRes.style.height = this.height;
-      highRes.style.width = this.width;
+      highRes.style.height = height;
+      highRes.style.width = width;
     } else {
-      highRes.style.width = this.width;
-      highRes.style.height = this.height;
+      highRes.style.width = width;
+      highRes.style.height = height;
     }
 
     highRes.onload = function(e) {
       highRes.classList.add("ngx-preloader-img-reveal");
       // inject the loaded thumbnail into its container
-      this.rd.appendChild(originalImageContainer, highRes);
-      this.imageLoaded.emit({ loaded: true, event: e });
+      rd.appendChild(originalImageContainer, highRes);
+      imageLoaded.emit({ loaded: true, event: e });
     }.bind(this);
 
     highRes.onerror = function(e) {
-      this.imageLoaded.emit({ loaded: false, event: e });
+      imageLoaded.emit({ loaded: false, event: e });
       // if it failed loading, loading the fall back image...
-      if (this.fallbackImg) {
-        highRes.src = this.fallbackImg;
+      if (fallbackImg) {
+        highRes.src = fallbackImg;
       }
     }.bind(this);
-    highRes.src = this.img;
+    highRes.src = img;
   }
 }
