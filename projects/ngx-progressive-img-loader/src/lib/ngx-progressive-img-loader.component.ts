@@ -145,7 +145,7 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
   // placeholder bg color, (optional) default, #eee
   @Input() placeholderBgColor: string;
 
-  // placeholder default image, (optional) default, base 64 image...
+  // placeholder default image, (optional) default, base 64 image.
   @Input() placeholderImg: string;
 
   // to emit image load event for thubmnail image
@@ -183,7 +183,7 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
       ".ngx-progressive-img-container-default-bg"
     );
 
-    // create and initiate the thumbnail image
+    // create and initiate the thumbnail image.
     const thumb: any = this.rd.createElement("img");
     thumb.style.height = "100%";
     thumb.style.width = "100%";
