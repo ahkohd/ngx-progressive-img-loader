@@ -5,9 +5,16 @@
     "email": "victor.olorunbunmi@gmail.com",
     "url": "https://github.com/ahkohd/"
   },
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A simple, flexible progressive image loader for angular 4+",
-  "keywords": ["progressive", "image", "loader", "lazy", "angular", "ngx"],
+  "keywords": [
+    "progressive",
+    "image",
+    "loader",
+    "lazy",
+    "angular",
+    "ngx"
+  ],
   "homepage": "https://github.com/ahkohd/ngx-progressive-img-loader",
   "license": "MIT",
   "peerDependencies": {
