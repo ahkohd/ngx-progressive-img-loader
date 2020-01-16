@@ -5,7 +5,7 @@
     "email": "victor.olorunbunmi@gmail.com",
     "url": "https://github.com/ahkohd/"
   },
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Base workspace for the ngx-progressive-img-loader angular 4+ component",
   "scripts": {
     "ng": "ng",
