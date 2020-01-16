@@ -233,6 +233,9 @@ export class NgxProgressiveImgLoaderComponent
     fallbackImg,
     img
   ) {
+    // Image starts to load..
+    imageLoaded(false);
+
     if (placeholderImg) {
       const placeholder$: any = el.nativeElement.querySelector(
         ".ngx-progressive-img-container-default-bg"
@@ -266,8 +269,8 @@ export class NgxProgressiveImgLoaderComponent
     }
 
     thumb.onload = function(e) {
-      // inject the loaded thumbnail into its container, wait for imge to finish
-      // loading before doing so
+      // Inject the loaded thumbnail into its container, wait for image to finish
+      // loading before doing so.
       rd.appendChild(thumbnailContainer, thumb);
       thumbnailLoaded.emit({ loaded: true, event: e });
     }.bind(this);
@@ -278,7 +281,7 @@ export class NgxProgressiveImgLoaderComponent
 
     thumb.src = thumbnail;
 
-    // create and initiate the origninal high res image
+    // Create the origninal high res image.
     const highRes = rd.createElement("img");
 
     if (preserveAspectRatio) {
@@ -295,14 +298,14 @@ export class NgxProgressiveImgLoaderComponent
 
     highRes.onload = function(e) {
       highRes.classList.add("ngx-preloader-img-reveal");
-      // inject the loaded thumbnail into its container
+      // Inject the loaded thumbnail into its container.
       rd.appendChild(originalImageContainer, highRes);
       imageLoaded.emit({ loaded: true, event: e });
     }.bind(this);
 
     highRes.onerror = function(e) {
       imageLoaded.emit({ loaded: false, event: e });
-      // if it failed loading, loading the fall back image...
+      // If failed loading, loading the fall back image.
       if (fallbackImg) {
         highRes.src = fallbackImg;
       }

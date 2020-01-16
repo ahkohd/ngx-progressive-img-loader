@@ -24,7 +24,9 @@ export class AppComponent implements OnInit {
   currentIndex: number = 0;
   currentPicture: any;
 
-  onImgLoad($event) {}
+  onImgLoad($event) {
+    this.imageLoaded = true;
+  }
   onThumbLoad($event) {}
 
   ngOnInit() {
