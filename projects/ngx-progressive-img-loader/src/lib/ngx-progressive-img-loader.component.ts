@@ -161,7 +161,7 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
   ngOnInit() {
     // if custom placeholder image isset, use it as placeholder bg
     if (this.placeholderImg) {
-      let placeholder: any = this.el.nativeElement.querySelector(
+      const placeholder: any = this.el.nativeElement.querySelector(
         ".ngx-progressive-img-container-default-bg"
       );
       placeholder.style.background = "url('" + this.placeholderImg + "')";
@@ -173,18 +173,18 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
   }
 
   loadImage() {
-    let thumbnailContainer: any = this.el.nativeElement.querySelector(
+    const thumbnailContainer: any = this.el.nativeElement.querySelector(
       ".ngx-progressive-img-container-low-res-container"
     );
-    let originalImageContainer: any = this.el.nativeElement.querySelector(
+    const originalImageContainer: any = this.el.nativeElement.querySelector(
       ".ngx-progressive-img-container-high-res-container"
     );
-    let placeholder: any = this.el.nativeElement.querySelector(
+    const placeholder: any = this.el.nativeElement.querySelector(
       ".ngx-progressive-img-container-default-bg"
     );
 
     // create and initiate the thumbnail image
-    let thumb: any = this.rd.createElement("img");
+    const thumb: any = this.rd.createElement("img");
     thumb.style.height = "100%";
     thumb.style.width = "100%";
 
@@ -215,8 +215,8 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
 
     thumb.src = this.thumbnail;
 
-    //create and initiate the origninal high res image
-    let highRes = this.rd.createElement("img");
+    // create and initiate the origninal high res image
+    const highRes = this.rd.createElement("img");
 
     if (this.preserveAspectRatio) {
       originalImageContainer.style.width = "100% !important";
@@ -240,7 +240,9 @@ export class NgxProgressiveImgLoaderComponent implements OnInit {
     highRes.onerror = function(e) {
       this.imageLoaded.emit({ loaded: false, event: e });
       // if it failed loading, loading the fall back image...
-      if (this.fallbackImg) highRes.src = this.fallbackImg;
+      if (this.fallbackImg) {
+        highRes.src = this.fallbackImg;
+      }
     }.bind(this);
     highRes.src = this.img;
   }
