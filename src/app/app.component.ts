@@ -6,7 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  imageLoaded = false;
+  imageLoaded: any;
 
   pictures: Array<any> = [
     {
@@ -21,11 +21,12 @@ export class AppComponent implements OnInit {
         "https://res.cloudinary.com/lasudev/image/upload/c_fill,g_center,h_100,q_auto:best/v1530475355/meetup_pictures/IMG-20180407-WA0011.png"
     }
   ];
-  currentIndex: number = 0;
+  currentIndex = 0;
   currentPicture: any;
 
-  onImgLoad($event) {
-    this.imageLoaded = true;
+  onImgLoad($event: { loaded: boolean; event: Event }) {
+    this.imageLoaded = $event;
+    console.log("Image Loaded", this.imageLoaded.loaded);
   }
   onThumbLoad($event) {}
 
@@ -38,7 +39,6 @@ export class AppComponent implements OnInit {
       this.currentIndex === this.pictures.length - 1
         ? 0
         : this.currentIndex + 1;
-    console.log(this.pictures[this.currentIndex]);
     this.currentPicture = this.pictures[this.currentIndex];
   }
 }

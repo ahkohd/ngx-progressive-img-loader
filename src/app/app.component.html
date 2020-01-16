@@ -7,11 +7,11 @@
 
 
 <br />
-<div *ngIf="!imageLoaded">
+<div *ngIf="!imageLoaded?.loaded">
   loading full resolution...
 </div>
 
-<div *ngIf="imageLoaded">
+<div *ngIf="imageLoaded?.loaded">
   High res image loaded!
 </div>
 

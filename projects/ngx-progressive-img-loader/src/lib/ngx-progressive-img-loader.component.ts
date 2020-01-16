@@ -234,7 +234,9 @@ export class NgxProgressiveImgLoaderComponent
     img
   ) {
     // Image starts to load..
-    imageLoaded(false);
+    if (this.imageLoaded instanceof EventEmitter) {
+      imageLoaded.emit({ loaded: false });
+    }
 
     if (placeholderImg) {
       const placeholder$: any = el.nativeElement.querySelector(
