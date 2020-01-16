@@ -3,25 +3,31 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
 ## Ngx-progressive-img-loader
-``Ngx-progressive-img-loader`` is a simple progressive image loader for **Angular4+**. It's easy to use and yet flexible. It uses the blur low resolution transition to high resolution technique to achieve a sleek progressive loading. 
+
+`Ngx-progressive-img-loader` is a simple progressive image loader for **Angular4+**. It's easy to use and yet flexible. It uses the blur low resolution transition to high resolution technique to achieve a sleek progressive loading.
+
 ## Demo
+
 ![ngx-progressive-img-loader demo](https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/01/1485348439progressive-image-example.gif)
 
 See full [demo on stackblitz.com](https://ngx-progressive-img-loader.stackblitz.io)
+
 ## Features
 
- - No use of external dependencies, implemented with Angular APIs.
- - Responsive progressive placeholder and images.
- - Provides API to maintain aspect ratio of the pre-loaded image.
- - Very fast and a light-weight library.
- - Provides API for easy reuse and out-of-box styling in your project.
- - Applies nice blur and transitioning to achieve a sleek pre-loading feel.
- - Ngx-progressive-img-loader can serve as a parent for other components.
+- No use of external dependencies, implemented with Angular APIs.
+- Responsive progressive placeholder and images.
+- Provides API to maintain aspect ratio of the pre-loaded image.
+- Very fast and a light-weight library.
+- Provides API for easy reuse and out-of-box styling in your project.
+- Applies nice blur and transitioning to achieve a sleek pre-loading feel.
+- Ngx-progressive-img-loader can serve as a parent for other components.
 
 ## Install
-``npm i ngx-progressive-img-loader --save``
+
+`npm i ngx-progressive-img-loader --save`
 
 Open your module file e.g `app.module.ts` and update **imports** array
+
 ```
 import  {  NgxProgressiveImgLoaderModule  }  from  'ngx-progressive-img-loader';
 ...
@@ -33,8 +39,11 @@ NgxProgressiveImgLoaderModule
 ```
 
 And that's all.
+
 ## Usage
+
 ### All APIs
+
 ```
 <ngx-progressive-img-loader
 	[height]="'320px'"
@@ -53,34 +62,39 @@ And that's all.
 ```
 
 ##
- - **[height]** :  The height of the pre-loaded image. _(required!)_
- - **[width]**:    The width of the pre-loaded image. _(required!)_
- - **(imageLoaded)**: Event fired on success or error in loading of the high resolution image. _(required!)_
- - **(thumbnailLoaded)**:  Event fired on success or error in loading of the low res/thumbnail image. _(required!)_
-- **[overlayTint]**:  Adds overlay tint/color/shade to your preloaded image. _(optional)_
-- **[preserveAspectRatio]**: If **true**, the pre-loaded image will fit into the pre-loader container without losing it's aspect ratio. If **false**, then it won't fit to aspect ratio.  *default: false; (optional)*
-- **[placeholderBgColor]**: The background color of the image pre-loader container element. *(optional)*
-- **[placeholderImg]**: The background image of the image pre-loader container element. *(optional)*
-- **[img]**: The URL to the high resolution image you want to load. *(required)*
-- **[thumbnail]**: The URL to the very low quality, thumbnail sized version of the high resolution image you want to load. *(required)*
-- **[fallbackImg]**: The URL to the image to load if the high resolution image you want to load failed loading. *(optional)*
+
+- **[height]** : The height of the pre-loaded image. _(required!)_
+- **[width]**: The width of the pre-loaded image. _(required!)_
+- **(imageLoaded)**: Event fired on success or error and when the loading of the high resolution image started. _(required!)_
+- **(thumbnailLoaded)**: Event fired on success or error in loading of the low res/thumbnail image. _(required!)_
+- **[overlayTint]**: Adds overlay tint/color/shade to your preloaded image. _(optional)_
+- **[preserveAspectRatio]**: If **true**, the pre-loaded image will fit into the pre-loader container without losing it's aspect ratio. If **false**, then it won't fit to aspect ratio. _default: false; (optional)_
+- **[placeholderBgColor]**: The background color of the image pre-loader container element. _(optional)_
+- **[placeholderImg]**: The background image of the image pre-loader container element. _(optional)_
+- **[img]**: The URL to the high resolution image you want to load. _(required)_
+- **[thumbnail]**: The URL to the very low quality, thumbnail sized version of the high resolution image you want to load. _(required)_
+- **[fallbackImg]**: The URL to the image to load if the high resolution image you want to load failed loading. _(optional)_
 
 **Note:** You can place components or html elements inside the `<ngx-progressive-img-loader> // your content goes here </ngx-progressive-img-loader>` so as the component can serve as a parent element or background for the contents you want to place in it.
 
 ## Events
+
 `<ngx-progressive-img-loader>` component emits two events to it's parent component.
 
- - **(imageLoaded)**:  This output can be used to handle events emitted, when the high resolution image you want to load encounter an **error** or **successfully loaded**.
- - **(thumbnailLoaded)**: This output can be used to handle events emitted, when the low resolution image you want to load encounter an **error** or **successfully loaded**.
+- **(imageLoaded)**: This output can be used to handle events emitted, when the high resolution image you want to load encounter an **error** or **successfully loaded**.
+- **(thumbnailLoaded)**: This output can be used to handle events emitted, when the low resolution image you want to load encounter an **error** or **successfully loaded**.
 
 The object emitted
+
 ```
 	// loaded: true if the image is successfully loaded, otherwise false
 	{loaded:  <true|false>, event:  e}
 ```
 
 ## Example
+
 A simple example:
+
 ```
 <ngx-progressive-img-loader
 	[height]="'450px'"
@@ -92,32 +106,29 @@ A simple example:
 </ngx-progressive-img-loader>
 ```
 
-Then in  **example.component.ts**:
-
+Then in **example.component.ts**:
 
     ....
     onImgLoad(e)
     {
-	    console.log("High quality image loaded?", e.loaded);
+        console.log("High quality image loaded?", e.loaded);
     }
     onThumbLoad(e)
     {
-	    console.log("Low qaulity thumbnail loaded?", e.loaded);
+        console.log("Low qaulity thumbnail loaded?", e.loaded);
     }
     ....
 
 ## Todo
 
- - Implement content place holder gradient background animation.
- - Implement progress bar/ circle to indicate image load level.
- - Target for **Webcomponent** for other front-end frameworks to use it.
+- Implement content place holder gradient background animation.
+- Implement progress bar/ circle to indicate image load level.
+- Target for **Webcomponent** for other front-end frameworks to use it.
 
 ## Contributing
 
- - Your commits conform to the conventions established [here
-](https://github.com/conventional-changelog-archived-repos/conventional-changelog-angular/blob/master/convention.md)
-
-
+- Your commits conform to the conventions established [here
+  ](https://github.com/conventional-changelog-archived-repos/conventional-changelog-angular/blob/master/convention.md)
 
 ## Development server
 
