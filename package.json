@@ -53,6 +53,6 @@
     "tsickle": "0.38.0",
     "tslib": "1.10.0",
     "tslint": "5.20.1",
-    "typescript": "3.7.4"
+    "typescript": "3.9.10"
   }
 }
